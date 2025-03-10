@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça ao Tesouro no Fundo do Mar</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            color: #01579b;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .tesouro-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        #oceano {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .local {
+            width: 100px;
+            height: 100px;
+            background-color: #0288d1;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .local:hover {
+            background-color: #01579b;
+        }
+
+        #mensagemTesouro {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="tesouro-container">
+        <h2>Caça ao Tesouro no Fundo do Mar</h2>
+        <p>Clique nos locais para encontrar o tesouro escondido!</p>
+        <div id="oceano"></div>
+        <p id="mensagemTesouro"></p>
+    </div>
+
+    <script>
+        const oceano = document.getElementById('oceano');
+        const mensagemTesouro = document.getElementById('mensagemTesouro');
+
+        function criarTabuleiro() {
+            oceano.innerHTML = ''; // Limpa o tabuleiro
+            const locais = Array.from({ length: 9 }, (_, i) => i); // Cria 9 locais
+            const tesouroIndex = Math.floor(Math.random() * 9); // Escolhe um local aleatório para o tesouro
+
+            locais.forEach((_, index) => {
+                const local = document.createElement('div');
+                local.classList.add('local');
+                local.dataset.tesouro = (index === tesouroIndex).toString(); // Define se tem tesouro
+                local.addEventListener('click', () => verificarTesouro(local));
+                oceano.appendChild(local);
+            });
+        }
+
+        function verificarTesouro(local) {
+            if (local.dataset.tesouro === 'true') {
+                local.textContent = '💰';
+                mensagemTesouro.textContent = 'Parabéns! Você encontrou o tesouro!';
+                setTimeout(() => {
+                    mensagemTesouro.textContent = 'Reiniciando...';
+                    criarTabuleiro(); // Reinicia o jogo após 2 segundos
+                }, 2000);
+            } else {
+                local.textContent = '🐚';
+                mensagemTesouro.textContent = 'Continue procurando...';
+            }
+            local.style.pointerEvents = 'none'; // Impede novos cliques no local
+        }
+
+        // Iniciar o jogo
+        criarTabuleiro();
+    </script>
+</body>
+</html>

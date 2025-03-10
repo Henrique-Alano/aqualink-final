@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqualink-recentes</title>
+    <link rel="shortcut icon" href="/teste/imagens/aqualink-right-removebg.-removebg-preview.png" type="image/x-icon">
+    <link rel="stylesheet" href="/teste/html/style.css">
+</head>
+
+<body class="bodyrec">
+    <nav class="navbar">
+        <img src="/teste/imagens/WhatsApp_Image_2024-11-19_at_19.08.52-removebg-preview (1).png" alt="">
+        <div class="logo">
+            <h1 class="atigoh1">Aqualink   Artigos</h1>
+        </div>
+        
+        <div class="menu">
+            <a href="/teste/html/oceanwise.html">Oceanwise</a>
+            <a href="/teste/html/sobre1.html">Sobre Nós</a>
+            <a href="/teste/html/Ecossistema.html">Ecossistema</a>
+            <a href="/teste/html/jogos.html">Jogos</a>
+            </div>
+            <div style=" background-image: url(/teste/imagens/pexels-ekamelev-920160\ \(1\).jpg);" class="head">
+                <h1>Artigos</h1>
+            </div>
+
+
+
+            <style>
+                body {
+                font-family: Arial, sans-serif;
+                background-color: #e0f7fa;
+                color: #01579b;
+                margin: 0;
+                padding: 0;
+            }
+            
+            header {
+                background-color: #0288d1;
+                padding: 20px;
+                text-align: center;
+            }
+            
+            header .logo img {
+                width: 100px;
+            }
+            
+            nav ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            nav ul li {
+                display: inline;
+                margin: 0 15px;
+            }
+            
+            nav ul li a {
+                color: white;
+                text-decoration: none;
+            }
+            
+            main {
+                padding: 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            
+            .artigos-lista {
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .artigo {
+                background-color: white;
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: calc(33.333% - 40px);
+                cursor: pointer;
+                transition: transform 0.3s ease;
+            }
+            
+            .artigo:hover {
+                transform: scale(1.05);
+            }
+            
+            .aba-conteudo {
+                display: none; /* Oculta a aba inicialmente */
+                margin-top: 20px;
+                padding: 20px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            footer {
+                background-color: #0288d1;
+                color: white;
+                text-align: center;
+                padding: 10px;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+            </style>
+            
+            
+                <main>
+                    <h2>Todos os Artigos</h2>
+                    <div class="artigos-lista">
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/artigo1.html" data-target="artigo1">Biodiversidade marinha:como preservar os animais que vivem debaixo dágua</a></h3>
+                        </div>
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/artigo3.html" data-target="artigo2">O Oceano é para Todos</a></h3>
+                        </div>
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/artigos4.html" data-target="artigo3">O oceano a partir do espaço</a></h3>
+                        </div>
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/artigo2.html" data-target="artigo3">Oceanos: um Mar de Plásticos</a></h3>
+                        </div>
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/artigo-recente3.html" data-target="artigo3">Férias na Praias</a></h3>
+                        </div>
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/artigo-recente2.html" data-target="artigo3">Vida na Água </a></h3>
+                        </div>
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/artigo-recente1.html" data-target="artigo3">Sem oceano, um futuro impossível</a></h3>
+                        </div>
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/article.html" data-target="artigo3">Adaptações das aves marinhas ao ambiente aquático</a></h3>
+                        </div>
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/article2.html" data-target="artigo3">As esponjas do mar e suas interações embaixo d’água</a></h3>
+                        </div>
+                        <div class="artigo">
+                            <h3><a href="/teste/artigos/article3.html" data-target="artigo3">O turismo de observação como ferramenta para a conservação da biodiversidade</a></h3>
+                            
+                        </div>
+                      
+                        
+                    </div>
+              <SCript>
+
+                    document.querySelectorAll('.artigo a').forEach(link => {
+                        link.addEventListener('click', function (e) {
+                            e.preventDefault(); // Impede o comportamento padrão do link
+                    
+                            const target = this.getAttribute('data-target');
+                            const abaConteudo = document.getElementById('aba-conteudo');
+                    
+                            // Carrega o conteúdo do artigo na aba
+                            fetch(${target}.html)
+                                .then(response => response.text())
+                                .then(data => {
+                                    abaConteudo.innerHTML = data;
+                                    abaConteudo.style.display = 'block'; // Mostra a aba
+                                })
+                                .catch(error => {
+                                    abaConteudo.innerHTML = '<p>Erro ao carregar o artigo.</p>';
+                                    abaConteudo.style.display = 'block';
+                                });
+                        });
+                    });
+</SCript>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz do Fundo do Mar</title>
+    <style>
+        .quiz-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        #pergunta {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        #opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #opcoes button {
+            padding: 10px;
+            background-color: #0288d1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #opcoes button:hover {
+            background-color: #01579b;
+        }
+
+        #proximaPergunta {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #proximaPergunta:hover {
+            background-color: #45a049;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Quiz do Fundo do Mar</h2>
+        <div id="pergunta"></div>
+        <div id="opcoes"></div>
+        <button id="proximaPergunta">Próxima Pergunta</button>
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        const perguntas = [
+            {
+                pergunta: "Qual é o maior animal do oceano?",
+                opcoes: ["Tubarão", "Baleia-azul", "Polvo", "Golfinho"],
+                resposta: "Baleia-azul"
+            },
+            {
+                pergunta: "O que são corais?",
+                opcoes: ["Plantas", "Animais", "Rochas", "Fungos"],
+                resposta: "Animais"
+            },
+            {
+                pergunta: "Qual é a função dos manguezais?",
+                opcoes: ["Produzir oxigênio", "Proteger a costa", "Criar ondas", "Armazenar sal"],
+                resposta: "Proteger a costa"
+            }
+        ];
+
+        let perguntaAtual = 0;
+        let pontuacao = 0;
+
+        function carregarPergunta() {
+            const perguntaElemento = document.getElementById('pergunta');
+            const opcoesElemento = document.getElementById('opcoes');
+            const resultadoElemento = document.getElementById('resultado');
+
+            perguntaElemento.textContent = perguntas[perguntaAtual].pergunta;
+            opcoesElemento.innerHTML = '';
+
+            perguntas[perguntaAtual].opcoes.forEach(opcao => {
+                const botao = document.createElement('button');
+                botao.textContent = opcao;
+                botao.addEventListener('click', () => verificarResposta(opcao));
+                opcoesElemento.appendChild(botao);
+            });
+
+            resultadoElemento.textContent = '';
+        }
+
+        function verificarResposta(opcao) {
+            if (opcao === perguntas[perguntaAtual].resposta) {
+                pontuacao++;
+            }
+            perguntaAtual++;
+
+            if (perguntaAtual < perguntas.length) {
+                carregarPergunta();
+            } else {
+                mostrarResultado();
+            }
+        }
+
+        function mostrarResultado() {
+            const resultadoElemento = document.getElementById('resultado');
+            resultadoElemento.textContent =' Você acertou ${pontuacao} de ${perguntas.length} perguntas!';
+            document.getElementById('proximaPergunta').style.display = 'none';
+        }
+
+        document.getElementById('proximaPergunta').addEventListener('click', carregarPergunta);
+
+        // Iniciar o quiz
+        carregarPergunta();
+    </script>
+</body>
+</html>

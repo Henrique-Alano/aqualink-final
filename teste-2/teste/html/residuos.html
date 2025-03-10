@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classificação de Resíduos</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            color: #01579b;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .classificacao-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        #residuos, #lixeiras {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .residuo, .lixeira {
+            padding: 10px;
+            background-color: #0288d1;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .lixeira {
+            background-color: #4CAF50;
+        }
+
+        #mensagemClassificacao {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="classificacao-container">
+        <h2>Classificação de Resíduos</h2>
+        <p>Arraste os resíduos para a lixeira correta!</p>
+        <div id="residuos"></div>
+        <div id="lixeiras">
+            <div class="lixeira" data-tipo="reciclavel">Reciclável</div>
+            <div class="lixeira" data-tipo="organico">Orgânico</div>
+            <div class="lixeira" data-tipo="nao-reciclavel">Não Reciclável</div>
+        </div>
+        <p id="mensagemClassificacao"></p>
+    </div>
+
+    <script>
+        const residuosContainer = document.getElementById('residuos');
+        const lixeiras = document.querySelectorAll('.lixeira');
+        const mensagemClassificacao = document.getElementById('mensagemClassificacao');
+
+        const residuos = [
+            { nome: 'Garrafa PET', tipo: 'reciclavel' },
+            { nome: 'Casca de Banana', tipo: 'organico' },
+            { nome: 'Pilha', tipo: 'nao-reciclavel' },
+            { nome: 'Lata de Alumínio', tipo: 'reciclavel' },
+            { nome: 'Casca de Ovo', tipo: 'organico' },
+            { nome: 'Embalagem de Isopor', tipo: 'nao-reciclavel' }
+        ];
+
+        function criarResiduos() {
+            residuosContainer.innerHTML = ''; // Limpa os resíduos
+            const residuosEmbaralhados = [...residuos].sort(() => Math.random() - 0.5); // Embaralha os resíduos
+
+            residuosEmbaralhados.forEach(residuo => {
+                const divResiduo = document.createElement('div');
+                divResiduo.classList.add('residuo');
+                divResiduo.textContent = residuo.nome;
+                divResiduo.dataset.tipo = residuo.tipo;
+                divResiduo.draggable = true;
+                divResiduo.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', residuo.tipo);
+                });
+                residuosContainer.appendChild(divResiduo);
+            });
+        }
+
+        lixeiras.forEach(lixeira => {
+            lixeira.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            lixeira.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const tipoResiduo = e.dataTransfer.getData('text/plain');
+                if (tipoResiduo === lixeira.dataset.tipo) {
+                    mensagemClassificacao.textContent = 'Correto! Resíduo classificado.';
+                } else {
+                    mensagemClassificacao.textContent = 'Errado! Tente novamente.';
+                }
+
+                // Verifica se todos os resíduos foram classificados
+                if (document.querySelectorAll('.residuo').length === 0) {
+                    mensagemClassificacao.textContent = 'Parabéns! Todos os resíduos foram classificados!';
+                    setTimeout(() => {
+                        criarResiduos(); // Reinicia o jogo após 2 segundos
+                    }, 2000);
+                }
+            });
+        });
+
+        // Iniciar o jogo
+        criarResiduos();
+    </script>
+</body>
+</html>
